@@ -7,7 +7,7 @@ export default function Form({ type, label1, label2, label3, textInputConfig1, t
 
   if(type === 'signIn'){
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, {marginTop: 15}]}>
           <Text>{label2}</Text>
           <TextInput style={styles.textInput} {...textInputConfig2}/>
           <Text>{label3}</Text>

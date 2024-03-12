@@ -15,14 +15,19 @@ function Authenticated(){
 function Auth(){
   return(
     <NavigationContainer>
-     <Stack.Navigator initialRouteName='SignUp'>
+     <Stack.Navigator initialRouteName='Sign up'>
         <Stack.Screen name='Sign up' component={SignUp} options={{
           headerStyle: {
            backgroundColor: myColor.green, 
           },
           headerTitleAlign: 'center',
         }}/>
-        <Stack.Screen name='Signin' component={SignIn}/>
+        <Stack.Screen name='Sign in' component={SignIn} options={{
+          headerStyle: {
+            backgroundColor: myColor.green,
+          },
+          headerTitleAlign: 'center',
+        }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
