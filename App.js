@@ -15,7 +15,7 @@ function Authenticated(){
 function Auth(){
   return(
     <NavigationContainer>
-     <Stack.Navigator initialRouteName='Sign up'>
+     <Stack.Navigator initialRouteName='Sign in'>
         <Stack.Screen name='Sign up' component={SignUp} options={{
           headerStyle: {
            backgroundColor: myColor.green, 

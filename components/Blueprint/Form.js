@@ -9,9 +9,9 @@ export default function Form({ type, label1, label2, label3, textInputConfig1, t
     return (
         <View style={[styles.container, {marginTop: 15}]}>
           <Text style={styles.text}>{label2}</Text>
-          <TextInput style={styles.textInput} {...textInputConfig2}/>
+          <TextInput style={[styles.textInput, {borderColor: emailIsValid? myColor.gray : myColor.red}]} {...textInputConfig2}/>
           <Text style={styles.text}>{label3}</Text>
-          <TextInput style={styles.textInput} {...textInputConfig3}/>
+          <TextInput style={[styles.textInput, {borderColor: passwordIsValid? myColor.gray : myColor.red}]} {...textInputConfig3}/>
       </View>
     );
   };

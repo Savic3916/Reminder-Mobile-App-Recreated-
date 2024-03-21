@@ -20,8 +20,6 @@ export default function SignUp({  }) {
     passwordValidity: true,
   });
 
-  console.log(inputsValidity)
-
   function changeTextHandler(objectName, newText){
     setInputs((currentInputs) => {
       return (
@@ -40,8 +38,8 @@ export default function SignUp({  }) {
     };
 
     const fullNameIsValid = formObj.fullName.trim().length > 2 && formObj.fullName.includes(' ');
-    const passwordIsValid = formObj.password.trim().length > 8;
     const emailIsValid = formObj.email.trim().length > 11 && formObj.email.includes('@') && !formObj.email.includes(' ');
+    const passwordIsValid = formObj.password.trim().length > 8;
 
     setInputValidity({
       fullNameValidity: fullNameIsValid,
