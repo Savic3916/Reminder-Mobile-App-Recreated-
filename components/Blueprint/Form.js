@@ -3,14 +3,14 @@ import React from 'react';
 
 import { myColor } from '../../constant/style/Colors';
 
-export default function Form({ type, label1, label2, label3, textInputConfig1, textInputConfig2, textInputConfig3 }) {
+export default function Form({ type, label1, label2, label3, textInputConfig1, textInputConfig2, textInputConfig3, fullNameIsValid, emailIsValid, passwordIsValid }) {
 
   if(type === 'signIn'){
     return (
         <View style={[styles.container, {marginTop: 15}]}>
-          <Text>{label2}</Text>
+          <Text style={styles.text}>{label2}</Text>
           <TextInput style={styles.textInput} {...textInputConfig2}/>
-          <Text>{label3}</Text>
+          <Text style={styles.text}>{label3}</Text>
           <TextInput style={styles.textInput} {...textInputConfig3}/>
       </View>
     );
@@ -19,11 +19,11 @@ export default function Form({ type, label1, label2, label3, textInputConfig1, t
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{label1}</Text>
-      <TextInput style={styles.textInput} {...textInputConfig1}/>
+      <TextInput style={[styles.textInput, {borderColor: fullNameIsValid? myColor.gray : myColor.red}]} {...textInputConfig1}/>
       <Text style={styles.text}>{label2}</Text>
-      <TextInput style={styles.textInput} {...textInputConfig2}/>
+      <TextInput style={[styles.textInput, {borderColor: emailIsValid? myColor.gray : myColor.red}]} {...textInputConfig2}/>
       <Text style={styles.text}>{label3}</Text>
-      <TextInput style={styles.textInput} {...textInputConfig3}/>
+      <TextInput style={[styles.textInput, {borderColor: passwordIsValid? myColor.gray : myColor.red}]} {...textInputConfig3}/>
     </View>
   )
 }
@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     padding: 10,
   }, 
   textInput: {
-    borderColor: myColor.gray,
     borderWidth: 2,
     padding: 10,
     borderRadius: 6,

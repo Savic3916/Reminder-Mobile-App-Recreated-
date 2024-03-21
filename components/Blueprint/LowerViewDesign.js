@@ -5,7 +5,7 @@ import Buttons from './Buttons';
 import { myColor } from '../../constant/style/Colors';
 import { useNavigation } from '@react-navigation/native';
 
-export default function LowerViewDesign({ mode }) {
+export default function LowerViewDesign({ mode, onPress }) {
 
     const navigation = useNavigation();
 
@@ -15,7 +15,7 @@ export default function LowerViewDesign({ mode }) {
 
   return (
     <View>
-      <Buttons title='Create Account' buttonStyle={styles.buttonStyle} buttonTextStyle={styles.buttonTextStyle}/>
+      <Buttons title='Create Account' buttonStyle={styles.buttonStyle} buttonTextStyle={styles.buttonTextStyle} onPress={onPress}/>
       <View style={{flexDirection: 'row', justifyContent: 'center'}}>
         {mode == 'sign Up'? 
                 <Text style={styles.bottomText}> Already have an account? </Text>

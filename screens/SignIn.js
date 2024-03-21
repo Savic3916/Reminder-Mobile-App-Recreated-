@@ -14,8 +14,8 @@ export default function SignIn() {
         type='signIn'
         label2='E-mail' 
         label3='Password'
-        textInputConfig2={{placeholder: 'Email', placeholderTextColor: myColor.lightGray}}
-        textInputConfig3={{placeholder: 'Password', placeholderTextColor: myColor.lightGray}}
+        textInputConfig2={{placeholder: 'johndoe@gmail.com', placeholderTextColor: myColor.lightGray}}
+        textInputConfig3={{placeholder: '**********', placeholderTextColor: myColor.lightGray}}
       />
       <LowerViewDesign/>
     </View>
