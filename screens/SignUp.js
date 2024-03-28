@@ -5,8 +5,13 @@ import UpperViewDesign from '../components/Blueprint/UpperViewDesign';
 import LowerViewDesign from '../components/Blueprint/LowerViewDesign';
 
 import { myColor } from '../constant/style/Colors';
+import { createUser, signupNewUser } from '../util/auth';
+import LoadingOverlay from '../components/Blueprint/LoadingOverlay';
 
 export default function SignUp({  }) {
+
+  // show an activity indicator when sening to the backend
+  const [isSending, setIsSending] = useState(false);
 
   const [inputs, setInputs] = useState({
     fullName: '',
@@ -39,7 +44,7 @@ export default function SignUp({  }) {
 
     const fullNameIsValid = formObj.fullName.trim().length > 2 && formObj.fullName.includes(' ');
     const emailIsValid = formObj.email.trim().length > 11 && formObj.email.includes('@') && !formObj.email.includes(' ');
-    const passwordIsValid = formObj.password.trim().length > 8;
+    const passwordIsValid = formObj.password.trim().length >= 8;
 
     setInputValidity({
       fullNameValidity: fullNameIsValid,
@@ -47,9 +52,12 @@ export default function SignUp({  }) {
       emailValidity: emailIsValid,
     });
 
-    function validatedHandler(){
-      console.log('Send to the backend');
-    };
+    // async function validatedHandler(){
+    //   const {email, password} = formObj;
+    //   setIsSending(true);
+    //   const response = await signupNewUser('signUp', email, password);
+    //   setIsSending(false);
+    // };
 
     if(!fullNameIsValid || !passwordIsValid || !emailIsValid){
       Alert.alert('Invalid Inputs', 'Check your inputs', [
@@ -64,7 +72,13 @@ export default function SignUp({  }) {
       ]);
       return;
     }
-    validatedHandler();
+    // validatedHandler();
+  };
+
+  if(isSending){
+    return (
+      <LoadingOverlay/>
+    )
   };
 
   return (
@@ -82,7 +96,7 @@ export default function SignUp({  }) {
         emailIsValid={inputsValidity.emailValidity}
         passwordIsValid={inputsValidity.passwordValidity}
       />
-      <LowerViewDesign onPress={validateForm}/>
+      <LowerViewDesign mode= 'sign up' onPress={validateForm}/>
     </View>
   )
 }

@@ -76,7 +76,7 @@ export default function SignIn() {
         emailIsValid={inputsValidity.emailValidity}
         passwordIsValid={inputsValidity.passwordValidity}
       />
-      <LowerViewDesign onPress={validateForm}/>
+      <LowerViewDesign mode = 'sign in' onPress={validateForm}/>
     </View>
   )
 }

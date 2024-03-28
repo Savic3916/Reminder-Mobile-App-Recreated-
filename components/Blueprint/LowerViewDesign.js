@@ -10,21 +10,34 @@ export default function LowerViewDesign({ mode, onPress }) {
     const navigation = useNavigation();
 
     function signInTextPressHandler(){
+      // replaces the sign up screen with the sign in screen
         navigation.replace('Sign in')
     };
+
+    function signUpTextPressHandler(){
+      // replaces the sign in screen with the sign up screen
+      navigation.replace('Sign up')
+    }
 
   return (
     <View>
       <Buttons title='Create Account' buttonStyle={styles.buttonStyle} buttonTextStyle={styles.buttonTextStyle} onPress={onPress}/>
       <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-        {mode == 'sign Up'? 
-                <Text style={styles.bottomText}> Already have an account? </Text>
+        {mode == 'sign up'? 
+                <>
+                    <Text style={styles.bottomText}> Already have an account? </Text>
+                    <Pressable onPress={signInTextPressHandler}>
+                        <Text style={[styles.bottomText, {color: myColor.green}]}> Sign in </Text>
+                    </Pressable>
+                </>
                 :
-                <Text style={styles.bottomText}> Don't have an account? </Text>
+                <>
+                    <Text style={styles.bottomText}> Don't have an account? </Text>
+                    <Pressable onPress={signUpTextPressHandler}>
+                        <Text style={[styles.bottomText, {color: myColor.green}]}> Sign up </Text>
+                    </Pressable>
+                </>
         }
-        <Pressable onPress={signInTextPressHandler}>
-          <Text style={[styles.bottomText, {color: myColor.green}]}> Sign in </Text>
-        </Pressable>
       </View>
     </View>
   )
