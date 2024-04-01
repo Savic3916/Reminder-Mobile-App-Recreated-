@@ -45,7 +45,7 @@ export default function LowerViewDesign({ mode, onPress }) {
 
 const styles = StyleSheet.create({
     buttonStyle: {
-      padding: 10,
+      padding: 15,
       borderRadius: 8,
       marginTop: 16,
       backgroundColor: myColor.green,

@@ -1,18 +1,17 @@
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { Alert, StyleSheet, KeyboardAvoidingView, View } from 'react-native';
 import React, { useState } from 'react';
 import Form from '../components/Blueprint/Form';
 import UpperViewDesign from '../components/Blueprint/UpperViewDesign';
 import LowerViewDesign from '../components/Blueprint/LowerViewDesign';
 
 import { myColor } from '../constant/style/Colors';
-import { createUser, signupNewUser } from '../util/auth';
+import { signupNewUser } from '../util/auth';
 import LoadingOverlay from '../components/Blueprint/LoadingOverlay';
 
 export default function SignUp({  }) {
 
   // show an activity indicator when sening to the backend
   const [isSending, setIsSending] = useState(false);
-
   const [inputs, setInputs] = useState({
     fullName: '',
     email: '',
@@ -52,12 +51,21 @@ export default function SignUp({  }) {
       emailValidity: emailIsValid,
     });
 
-    // async function validatedHandler(){
-    //   const {email, password} = formObj;
-    //   setIsSending(true);
-    //   const response = await signupNewUser('signUp', email, password);
-    //   setIsSending(false);
-    // };
+    async function validatedHandler(){
+      const {email, password} = formObj;
+      setIsSending(true);
+      try {
+        await signupNewUser(email, password);
+      } catch (error) {
+        Alert.alert('Signup error', 'Check your network', [
+          {
+            text: 'Ok', 
+            // onPress: () => console.log('Pressed!!'),
+          }
+        ])
+      }
+      setIsSending(false);
+    };
 
     if(!fullNameIsValid || !passwordIsValid || !emailIsValid){
       Alert.alert('Invalid Inputs', 'Check your inputs', [
@@ -65,24 +73,20 @@ export default function SignUp({  }) {
           text: 'Ok',
           style: 'default',
         },
-        {
-          text: 'Cancel',
-          style: 'default'
-        },
       ]);
       return;
     }
-    // validatedHandler();
+    validatedHandler();
   };
 
   if(isSending){
     return (
-      <LoadingOverlay/>
+      <LoadingOverlay text='Creating new user...'/>
     )
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <UpperViewDesign mode={'Sign Up'}/>
       <Form 
         type='signUp'
@@ -97,7 +101,7 @@ export default function SignUp({  }) {
         passwordIsValid={inputsValidity.passwordValidity}
       />
       <LowerViewDesign mode= 'sign up' onPress={validateForm}/>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 

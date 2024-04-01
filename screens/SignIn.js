@@ -5,9 +5,12 @@ import Form from '../components/Blueprint/Form';
 import LowerViewDesign from '../components/Blueprint/LowerViewDesign';
 
 import { myColor } from '../constant/style/Colors';
+import { loginUser } from '../util/auth';
+import LoadingOverlay from '../components/Blueprint/LoadingOverlay';
 
 export default function SignIn() {
 
+  const [isSending, setIsSending] = useState(false);
   const [inputs, setInputs] = useState({
     email: '',
     password: '',
@@ -43,8 +46,20 @@ export default function SignIn() {
       passwordValidity: passwordIsValid,
     })
 
-    function validateHandler(){
-      console.log('Send to the backend');
+    async function validateHandler(){
+      setIsSending(true);
+      try {
+        const {email, password} = formObj;
+        await loginUser(email, password);
+      } catch (error) {
+        Alert.alert('Signin error', 'Check your credentials', [
+          {
+            text: 'Ok', 
+            // onPress: () => console.log('Pressed!!'),
+          }
+        ]);
+      }
+      setIsSending(false);
     };
 
     if(!emailIsValid || !passwordIsValid){
@@ -62,6 +77,12 @@ export default function SignIn() {
     };
 
     validateHandler();
+  };
+
+  if(isSending){
+    return (
+      <LoadingOverlay text='Logging in users...'/>
+    );
   };
 
   return (

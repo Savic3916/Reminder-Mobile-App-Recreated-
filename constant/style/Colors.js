@@ -5,5 +5,5 @@ export const myColor = {
     gray: '#808080',
     lightGray: '#D3D3D3',
     lightestGray: '#f7f3f3',
-    red: '#FF0000',
+    red: '#c94b4b',
 }
