@@ -1,14 +1,21 @@
 import { Alert, StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import UpperViewDesign from '../components/Blueprint/UpperViewDesign';
-import Form from '../components/Blueprint/Form';
 import LowerViewDesign from '../components/Blueprint/LowerViewDesign';
+import LoadingOverlay from '../components/Blueprint/LoadingOverlay';
+import Form from '../components/Blueprint/Form';
 
 import { myColor } from '../constant/style/Colors';
 import { loginUser } from '../util/auth';
-import LoadingOverlay from '../components/Blueprint/LoadingOverlay';
+import { useSelector, useDispatch } from 'react-redux';
+import { login, logout, storeToken } from '../util/redux/authSlice';
 
 export default function SignIn() {
+
+   // APP WIDE STATE
+   const loggedIn = useSelector((state) => state.auth.isAuthenticated);
+   const token = useSelector((state) => state.auth.token);
+   const dispatch = useDispatch();
 
   const [isSending, setIsSending] = useState(false);
   const [inputs, setInputs] = useState({
@@ -50,7 +57,12 @@ export default function SignIn() {
       setIsSending(true);
       try {
         const {email, password} = formObj;
-        await loginUser(email, password);
+        const token = await loginUser(email, password);
+        dispatch(storeToken(token));
+
+        if(token != null){
+          dispatch(login(true))
+         };
       } catch (error) {
         Alert.alert('Signin error', 'Check your credentials', [
           {
