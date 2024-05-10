@@ -1,50 +1,81 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useCallback } from 'react';
-import ImageDisplay from '../components/Blueprint/ImageDisplay';
+import { StyleSheet, Text, View, Modal } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import ImageDisplay from '../components/components/ImageDisplay';
+import * as SplashScreen from 'expo-splash-screen';
+import DailyReminderCircle from '../components/Blueprint/DailyReminderCircle';
+import CancelButton from '../components/components/CancelButton';
+import DailyReminderList from '../components/components/DailyReminderList';
 
 import { myColor } from '../constant/style/Colors';
 import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import DailyReminderCircle from '../components/Blueprint/DailyReminderCircle';
+import Buttons from '../components/Blueprint/Buttons';
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 export default function HomeScreen() {
-  const [fontsLoaded, fontError] = useFonts({
-    'Roboto': require('../assets/fonts/Roboto-Light.ttf'),
-    'Sedan': require('../assets/fonts/Sedan-Regular.ttf'),
-    'Jersey': require('../assets/fonts/Jersey15-Regular.ttf'),
-  });
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded || fontError) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
+  const [modalVisible, setModalVisible] = useState(false);
 
-  if (!fontsLoaded && !fontError) {
-    return null;
-  };
+  function buttonPressHandler(){
+    setModalVisible(true)
+  }
+  
+  // const [fontsLoaded, fontError] = useFonts({
+  //   'Roboto': require('../assets/fonts/Roboto-Light.ttf'),
+  //   'Sedan': require('../assets/fonts/Sedan-Regular.ttf'),
+  //   // 'Jersey': require('../assets/fonts/Jersey15-Regular.ttf'),
+  // });
+
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (fontsLoaded || fontError) {
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [fontsLoaded, fontError]);
+
+  // if (!fontsLoaded && !fontError) {
+  //   return null;
+  // };
 
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
           <View style={{marginTop: 30,}}>
-            <Text style={[styles.text, { letterSpacing: 2 }]}> Hi Kristine! </Text>
-            <Text style={[styles.text, {fontSize: 17}]}>  You have 5 tasks today... </Text>
+            <Text style={[styles.text, { letterSpacing: 3 }]}> Hi Kristine! </Text>
+            <Text style={[styles.text, {fontSize: 17, letterSpacing: 1}]}>  You have 5 tasks today... </Text>
           </View>
           <ImageDisplay/>
       </View>
       <View>
-
       </View>
       <View style={styles.dailyReminderContainer}>
-            <Text style={[styles.dailyReminderText, {fontFamily: 'Jersey15-Regular'}]}> Daily Reminder </Text>
-            <Text style={[styles.dailyReminderText, {color: myColor.lightGray, fontSize: 14, marginTop: 8, fontWeight: '400'}]}> Your daily reminder to maintain your <Text> {'\n'} daily routine </Text></Text>
+            <Text style={[styles.dailyReminderText, /*{fontFamily: 'Sedan'}*/]}> Daily Reminder </Text>
+            <Text style={[styles.dailyReminderText, {color: myColor.lightGray, fontSize: 15, marginTop: 3, fontWeight: 'bold'}]}>  Your daily reminder to maintain your <Text> {'\n'}  daily routine </Text></Text>
       </View>
       <View style={styles.dailyRemindersContent}>
-        <DailyReminderCircle color={myColor.midGreen}/>
+        <DailyReminderCircle 
+          color={myColor.midGreen} 
+          source={require('../assets/icons/add.png')} 
+          modalOn={modalVisible} 
+          buttonPressHandler={buttonPressHandler}
+          borderStyle='dashed'
+          backgroundColor= {myColor.midGreen}
+          borderColor= {myColor.green}
+        />
       </View>
+      <Modal animationType='slide' visible={modalVisible} transparent={true}>
+        <View style={styles.modalView}>
+          <View style={styles.modalHalfWhiteBox}>
+            <View style={styles.cancelButtonView}>
+              <CancelButton onPress={() => setModalVisible(false)}/>
+            </View>
+            <DailyReminderList/>
+            <View>
+              <Buttons title='Pick Time' buttonStyle={styles.buttonStyle}/>
+            </View>
+          </View>
+
+        </View>
+      </Modal>
     </View>
   )
 }
@@ -56,37 +87,67 @@ const styles = StyleSheet.create({
   },
   container:{
     flexDirection: 'row',
-    height: '20%',
+    height: '18%',
     backgroundColor: myColor.green,
     padding: 8,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
     justifyContent: 'space-between',
     shadowColor: 'black',
     shadowOffset: {height: 1, width: 1},
     shadowOpacity: 0.3,
     shadowRadius: 3,
+    elevation: 4
   },
   text: {
     fontWeight: 'bold',
-    fontSize: 27,
+    fontSize: 30,
     color: 'white',
-    marginBottom: 10,
-    fontFamily: 'Roboto',
+    marginBottom: 4,
+    //fontFamily: 'Roboto',
   },
   dailyReminderContainer: {
-    marginTop: 30,
+    marginTop: '20%',
     padding: 8
   },
   dailyReminderText: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
 
   },
   dailyRemindersContent: {
     flexDirection: 'row',
     padding: 8,
-    // backgroundColor: 'red'
   },
-  
+  modalView: {
+    flex: 1,
+    opacity: 0.97,
+    backgroundColor: myColor.gray,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalHalfWhiteBox: {
+    width: '85%',
+    height: '45%',
+    backgroundColor: myColor.white,
+    borderRadius: 20,
+    shadowColor: 'black',
+    shadowOffset: {width: 1, height: 1},
+    shadowRadius: 3,
+    shadowOpacity: '0.4',
+    elevation: 3,
+    alignItems: 'center',
+    // justifyContent: 'center'
+  },
+  cancelButtonView: {
+    position: 'absolute',
+    right: 0,
+    top: 4,
+  },
+  buttonStyle: {
+    backgroundColor: myColor.green,
+    borderRadius: 12,
+    paddingVertical: 4,
+    paddingHorizontal: 15
+  }
 })

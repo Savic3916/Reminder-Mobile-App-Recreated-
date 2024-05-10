@@ -160,8 +160,8 @@ export default function App() {
 
 const styles = StyleSheet.create({
   icons: {
-    width: 25,
-    height: 25,
+    width: 20,
+    height: 20,
     tintColor: myColor.gray,
   },
   focusedIcons: {
@@ -182,6 +182,7 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 1, height: 5},
     shadowRadius: 3,
     shadowOpacity: 0.4,
+    elevation: 3,
   },
   addIcon: {
     width: 50,
