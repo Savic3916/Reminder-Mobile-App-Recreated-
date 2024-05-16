@@ -128,12 +128,13 @@ export default function DailyReminderList() {
 const styles = StyleSheet.create({
     container: {
         padding: 10,
+        marginTop: 30,
         // backgroundColor: 'red'
         
     },
     reminderListView: {
         flexDirection: 'row',
-        marginTop: '5%',
+        // marginTop: '5%',
 
     }
 })

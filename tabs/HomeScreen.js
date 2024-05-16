@@ -18,6 +18,9 @@ export default function HomeScreen() {
 
   function buttonPressHandler(){
     setModalVisible(true)
+  };
+  function buttonCloseModal() {
+    setModalVisible(false);
   }
   
   // const [fontsLoaded, fontError] = useFonts({
@@ -66,7 +69,7 @@ export default function HomeScreen() {
         <View style={styles.modalView}>
           <View style={styles.modalHalfWhiteBox}>
             <View style={styles.cancelButtonView}>
-              <CancelButton onPress={() => setModalVisible(false)}/>
+              <CancelButton onPress={buttonCloseModal}/>
             </View>
             <DailyReminderList/>
             <View>
