@@ -7,5 +7,6 @@ export const myColor = {
     lightestGray: '#f7f3f3',
     lighestShadeOfGray: '#F9FAFB',
     red: '#c94b4b',
-    midGreen : '#A0DDCA'
-}
+    midGreen : '#A0DDCA',
+    black: '#000000'
+};

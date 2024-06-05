@@ -15,6 +15,12 @@ export const authSlice = createSlice({
         },
         logout: (state, action) => {
             state.isAuthenticated = action.payload;
+        },
+        addToDailyReminders: (state, actions) => {
+            state.dailyReminders = actions.payload;
+        },
+        removeFromDailyReminders: (state, actions) => {
+            state.dailyReminders = actions.payload;
         }
     },
 });

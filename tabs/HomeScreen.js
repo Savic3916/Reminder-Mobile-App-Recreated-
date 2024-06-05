@@ -9,19 +9,21 @@ import DailyReminderList from '../components/components/DailyReminderList';
 import { myColor } from '../constant/style/Colors';
 import { useFonts } from 'expo-font';
 import Buttons from '../components/Blueprint/Buttons';
+import { useSelector, useDispatch } from 'react-redux';
+import ModalContainer from '../components/components/ModalContainer';
 
 // SplashScreen.preventAutoHideAsync();
 
 export default function HomeScreen() {
 
+  const dailyReminders = useSelector((state) => state.dailyReminders.reminders);
+
   const [modalVisible, setModalVisible] = useState(false);
 
-  function buttonPressHandler(){
+  function buttonOpenModal(){
     setModalVisible(true)
   };
-  function buttonCloseModal() {
-    setModalVisible(false);
-  }
+  
   
   // const [fontsLoaded, fontError] = useFonts({
   //   'Roboto': require('../assets/fonts/Roboto-Light.ttf'),
@@ -54,31 +56,22 @@ export default function HomeScreen() {
             <Text style={[styles.dailyReminderText, /*{fontFamily: 'Sedan'}*/]}> Daily Reminder </Text>
             <Text style={[styles.dailyReminderText, {color: myColor.lightGray, fontSize: 15, marginTop: 3, fontWeight: 'bold'}]}>  Your daily reminder to maintain your <Text> {'\n'}  daily routine </Text></Text>
       </View>
+      <ModalContainer modalVisible={modalVisible} setModalVisible={setModalVisible}/>
       <View style={styles.dailyRemindersContent}>
         <DailyReminderCircle 
-          color={myColor.midGreen} 
-          source={require('../assets/icons/add.png')} 
-          modalOn={modalVisible} 
-          buttonPressHandler={buttonPressHandler}
-          borderStyle='dashed'
-          backgroundColor= {myColor.midGreen}
-          borderColor= {myColor.green}
+          borderType='dashed'
+          backgroundColor={myColor.lightGreen}
+          borderColor={myColor.green}
+          source={require('../assets/icons/add.png')}
+          onPress={buttonOpenModal}
+          tint={myColor.black}
         />
-      </View>
-      <Modal animationType='slide' visible={modalVisible} transparent={true}>
-        <View style={styles.modalView}>
-          <View style={styles.modalHalfWhiteBox}>
-            <View style={styles.cancelButtonView}>
-              <CancelButton onPress={buttonCloseModal}/>
-            </View>
-            <DailyReminderList/>
-            <View>
-              <Buttons title='Pick Time' buttonStyle={styles.buttonStyle}/>
-            </View>
-          </View>
-
+        <View style={{flexDirection: 'row'}}>
+         
         </View>
-      </Modal>
+      </View>
+      
+      
     </View>
   )
 }
@@ -122,35 +115,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 8,
   },
-  modalView: {
-    flex: 1,
-    opacity: 0.97,
-    backgroundColor: myColor.gray,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalHalfWhiteBox: {
-    width: '85%',
-    height: '45%',
-    backgroundColor: myColor.white,
-    borderRadius: 20,
-    shadowColor: 'black',
-    shadowOffset: {width: 1, height: 1},
-    shadowRadius: 3,
-    shadowOpacity: '0.4',
-    elevation: 3,
-    alignItems: 'center',
-    // justifyContent: 'center'
-  },
-  cancelButtonView: {
-    position: 'absolute',
-    right: 0,
-    top: 4,
-  },
-  buttonStyle: {
-    backgroundColor: myColor.green,
-    borderRadius: 12,
-    paddingVertical: 4,
-    paddingHorizontal: 15
-  }
+  
 })

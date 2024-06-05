@@ -9,7 +9,7 @@ export default function CancelButton({onPress}) {
     <Pressable 
         style={({pressed}) => pressed && pressed}
         onPress={onPress}>
-      <MaterialIcons name="cancel" size={28} color={myColor.red} />
+      <MaterialIcons name="cancel" size={24} color={myColor.red} />
     </Pressable>
   )
 }
